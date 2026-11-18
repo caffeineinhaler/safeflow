@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="en" data-mode="light">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>SafeFlow - Venue Safety Operations Platform</title>
+<meta name="description" content="SafeFlow is a professional safety, incident, alert, and operations platform for high-density venues."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#f4f7fb;
+  --bg2:#eef3f8;
+  --surface:#ffffff;
+  --surface2:#f9fbfd;
+  --surface3:#edf2f7;
+  --border:#dbe3ec;
+  --border2:#c5d0dc;
+  --text:#121820;
+  --muted:#5d6a78;
+  --subtle:#8b98a7;
+  --brand:#0f766e;
+  --brand2:#134e4a;
+  --blue:#2563eb;
+  --green:#15803d;
+  --amber:#b45309;
+  --red:#dc2626;
+  --violet:#6d28d9;
+  --shadow:0 14px 36px rgba(18,24,32,.08);
+  --shadow2:0 6px 16px rgba(18,24,32,.07);
+  --focus:0 0 0 3px rgba(15,118,110,.18);
+  --font:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+}
+[data-mode="dark"]{
+  --bg:#0b0d0f;
+  --bg2:#111417;
+  --surface:#15191d;
+  --surface2:#1b2025;
+  --surface3:#242a30;
+  --border:#303840;
+  --border2:#44505c;
+  --text:#f5f7fa;
+  --muted:#aeb8c3;
+  --subtle:#788491;
+  --brand:#2dd4bf;
+  --brand2:#99f6e4;
+  --blue:#60a5fa;
+  --green:#4ade80;
+  --amber:#f59e0b;
+  --red:#f87171;
+  --violet:#a78bfa;
+  --shadow:0 18px 44px rgba(0,0,0,.36);
+  --shadow2:0 10px 22px rgba(0,0,0,.28);
+  --focus:0 0 0 3px rgba(45,212,191,.20);
+}
+*{box-sizing:border-box}
+html{height:100%;-webkit-text-size-adjust:100%}
+body{margin:0;min-height:100%;font-family:var(--font);background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased}
+button,input,select,textarea{font:inherit}
+button{border:0;background:none;color:inherit;cursor:pointer}
+input,select,textarea{width:100%;border:1px solid var(--border);background:var(--surface);color:var(--text);border-radius:8px;padding:11px 12px;outline:none;transition:border .16s ease,box-shadow .16s ease,background .16s ease}
+input:focus,select:focus,textarea:focus{border-color:var(--brand);box-shadow:var(--focus)}
+textarea{min-height:96px;resize:vertical}
+label{display:block;font-size:12px;font-weight:700;color:var(--muted);margin-bottom:7px}
+a{color:var(--brand);text-decoration:none}
+.app{min-height:100vh}
+.icon{width:18px;height:18px;display:inline-block;vertical-align:middle;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:0 0 auto}
+.icon-lg{width:22px;height:22px}
+.muted{color:var(--muted)}
+.subtle{color:var(--subtle)}
+.strong{font-weight:800}
+.mono{font-variant-numeric:tabular-nums}
+.hidden{display:none!important}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:40px;padding:10px 14px;border-radius:8px;border:1px solid transparent;font-weight:700;font-size:13px;line-height:1;white-space:nowrap;transition:background .16s ease,border .16s ease,color .16s ease,transform .16s ease}
+.btn:hover{transform:translateY(-1px)}
+.btn:active{transform:translateY(0)}
+.btn-primary{background:var(--brand);color:#fff}
+[data-mode="dark"] .btn-primary{color:#07110f}
+.btn-ghost{background:var(--surface2);border-color:var(--border);color:var(--text)}
+.btn-outline{border-color:var(--border2);background:transparent;color:var(--text)}
+.btn-danger{background:var(--red);color:#fff}
+.btn-warning{background:var(--amber);color:#fff}
+.btn-success{background:var(--green);color:#fff}
+.btn-sm{min-height:32px;padding:7px 10px;font-size:12px}
+.btn-full{width:100%}
+.toolbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.topbar{position:sticky;top:0;z-index:40;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;background:rgba(255,255,255,.86);border-bottom:1px solid var(--border);backdrop-filter:blur(18px)}
+[data-mode="dark"] .topbar{background:rgba(11,13,15,.88)}
+.brand{display:flex;align-items:center;gap:11px;font-weight:800;min-width:0}
+.brand-mark{width:36px;height:36px;border-radius:8px;background:linear-gradient(135deg,var(--brand),var(--blue));color:#fff;display:grid;place-items:center;box-shadow:var(--shadow2)}
+.brand-title{display:flex;flex-direction:column;line-height:1.05}
+.brand-title span:first-child{font-size:16px}
+.brand-title span:last-child{font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-top:4px}
+.landing{min-height:100vh;background:linear-gradient(180deg,var(--bg),var(--bg2));display:flex;flex-direction:column}
+.landing-main{width:100%;max-width:1180px;margin:0 auto;padding:44px 24px 56px;display:grid;grid-template-columns:1.03fr .97fr;gap:30px;align-items:start}
+.hero h1{font-size:44px;line-height:1.04;margin:0 0 15px;font-weight:800;letter-spacing:0}
+.hero p{font-size:16px;line-height:1.7;color:var(--muted);max-width:650px;margin:0 0 24px}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:28px}
+.proof-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.proof{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:15px;box-shadow:var(--shadow2)}
+.proof .value{font-size:22px;font-weight:800;margin-bottom:4px}
+.proof .label{font-size:12px;color:var(--muted);font-weight:700}
+.ops-board{background:var(--surface);border:1px solid var(--border);border-radius:8px;box-shadow:var(--shadow);overflow:hidden}
+.ops-head{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;border-bottom:1px solid var(--border)}
+.ops-title{font-weight:800}
+.ops-body{padding:18px;display:grid;gap:14px}
+.venue-map{position:relative;min-height:270px;border:1px solid var(--border);border-radius:8px;background:linear-gradient(135deg,var(--surface2),var(--surface3));overflow:hidden}
+.map-grid{position:absolute;inset:0;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:34px 34px;opacity:.48}
+.zone-node{position:absolute;border:1px solid var(--border2);background:var(--surface);border-radius:8px;padding:8px 10px;box-shadow:var(--shadow2);min-width:112px}
+.zone-node .zn-title{font-size:12px;font-weight:800;margin-bottom:4px}
+.zone-node .zn-meta{font-size:11px;color:var(--muted)}
+.node-high{border-color:rgba(220,38,38,.5)}
+.node-watch{border-color:rgba(180,83,9,.55)}
+.node-safe{border-color:rgba(21,128,61,.45)}
+.pulse{position:absolute;width:12px;height:12px;border-radius:50%;background:var(--red);box-shadow:0 0 0 6px rgba(220,38,38,.14)}
+.portal-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.portal-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:18px;text-align:left;box-shadow:var(--shadow2);display:flex;flex-direction:column;gap:14px;min-height:188px;transition:transform .16s ease,border .16s ease,box-shadow .16s ease}
+.portal-card:hover{transform:translateY(-2px);border-color:var(--brand);box-shadow:var(--shadow)}
+.portal-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.portal-icon{width:42px;height:42px;border-radius:8px;display:grid;place-items:center;background:var(--surface3);color:var(--brand)}
+.portal-card h2{font-size:18px;margin:0}
+.portal-card p{font-size:13px;line-height:1.55;color:var(--muted);margin:0;flex:1}
+.feature-list{display:grid;gap:7px;margin:0;padding:0;list-style:none}
+.feature-list li{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:12px;font-weight:600}
+.check-dot{width:7px;height:7px;border-radius:50%;background:var(--green);flex:0 0 auto}
+.source-note{max-width:1180px;margin:0 auto 28px;padding:0 24px;color:var(--subtle);font-size:12px;line-height:1.6}
+.shell{min-height:100vh;display:grid;grid-template-columns:248px 1fr;background:var(--bg)}
+.sidebar{position:sticky;top:0;height:100vh;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;z-index:30}
+.side-head{padding:18px 16px;border-bottom:1px solid var(--border)}
+.role-chip{display:inline-flex;align-items:center;gap:7px;margin-top:12px;padding:6px 9px;border-radius:8px;background:var(--surface3);color:var(--muted);font-size:12px;font-weight:800}
+.side-nav{padding:12px;display:grid;gap:5px;overflow:auto}
+.nav-item{display:flex;align-items:center;gap:10px;width:100%;padding:10px;border-radius:8px;color:var(--muted);font-weight:700;font-size:13px;text-align:left}
+.nav-item:hover{background:var(--surface2);color:var(--text)}
+.nav-item.active{background:rgba(15,118,110,.12);color:var(--brand)}
+[data-mode="dark"] .nav-item.active{background:rgba(45,212,191,.13)}
+.side-foot{margin-top:auto;padding:14px 12px;border-top:1px solid var(--border);display:grid;gap:8px}
+.content{min-width:0}
+.content-top{height:64px;background:rgba(244,247,251,.86);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 24px;position:sticky;top:0;z-index:25;backdrop-filter:blur(18px)}
+[data-mode="dark"] .content-top{background:rgba(11,13,15,.88)}
+.page{padding:24px;max-width:1440px;margin:0 auto}
+.page-title{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;margin-bottom:20px}
+.page-title h1{font-size:26px;line-height:1.2;margin:0;font-weight:800}
+.page-title p{margin:6px 0 0;color:var(--muted);font-size:14px;line-height:1.55}
+.grid{display:grid;gap:16px}
+.grid-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.grid-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.grid-4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.panel{background:var(--surface);border:1px solid var(--border);border-radius:8px;box-shadow:var(--shadow2);overflow:hidden}
+.panel-pad{padding:16px}
+.panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:15px 16px;border-bottom:1px solid var(--border)}
+.panel-title{font-weight:800;font-size:14px}
+.panel-sub{color:var(--muted);font-size:12px;margin-top:3px}
+.stat{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:16px;box-shadow:var(--shadow2)}
+.stat-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:13px}
+.stat-icon{width:34px;height:34px;border-radius:8px;background:var(--surface3);display:grid;place-items:center;color:var(--brand)}
+.stat-value{font-size:25px;font-weight:800;line-height:1}
+.stat-label{color:var(--muted);font-size:12px;font-weight:700;margin-top:6px}
+.stat-trend{font-size:12px;font-weight:800}
+.trend-good{color:var(--green)}
+.trend-watch{color:var(--amber)}
+.trend-risk{color:var(--red)}
+.badge{display:inline-flex;align-items:center;gap:6px;min-height:24px;padding:4px 8px;border-radius:8px;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;border:1px solid transparent}
+.badge-green{color:var(--green);background:rgba(21,128,61,.10);border-color:rgba(21,128,61,.22)}
+.badge-amber{color:var(--amber);background:rgba(180,83,9,.10);border-color:rgba(180,83,9,.22)}
+.badge-red{color:var(--red);background:rgba(220,38,38,.10);border-color:rgba(220,38,38,.22)}
+.badge-blue{color:var(--blue);background:rgba(37,99,235,.10);border-color:rgba(37,99,235,.20)}
+.badge-muted{color:var(--muted);background:var(--surface3);border-color:var(--border)}
+.row-list{display:grid}
+.row{display:flex;align-items:center;gap:12px;padding:13px 16px;border-bottom:1px solid var(--border)}
+.row:last-child{border-bottom:0}
+.row-main{min-width:0;flex:1}
+.row-title{font-weight:800;font-size:13px;margin-bottom:4px}
+.row-sub{font-size:12px;color:var(--muted);line-height:1.45}
+.avatar{width:38px;height:38px;border-radius:8px;background:var(--surface3);display:grid;place-items:center;color:var(--brand);font-size:12px;font-weight:800;flex:0 0 auto}
+.table-wrap{overflow:auto}
+table{width:100%;border-collapse:collapse;min-width:720px}
+th,td{text-align:left;border-bottom:1px solid var(--border);padding:12px 14px;font-size:13px;vertical-align:middle}
+th{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);background:var(--surface2);font-weight:800}
+tr:last-child td{border-bottom:0}
+.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.field-full{grid-column:1/-1}
+.switch-line{display:flex;align-items:center;gap:10px}
+.switch{width:42px;height:24px;border-radius:999px;background:var(--surface3);border:1px solid var(--border2);position:relative;flex:0 0 auto}
+.switch::after{content:"";position:absolute;width:18px;height:18px;left:2px;top:2px;border-radius:50%;background:var(--subtle);transition:left .16s ease,background .16s ease}
+.switch.on{background:rgba(15,118,110,.16);border-color:var(--brand)}
+.switch.on::after{left:20px;background:var(--brand)}
+.incident-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:15px;display:grid;gap:12px;box-shadow:var(--shadow2)}
+.incident-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.incident-id{font-size:12px;font-weight:800;color:var(--muted)}
+.incident-title{font-size:15px;font-weight:800;margin-top:4px}
+.incident-meta{display:flex;gap:8px;flex-wrap:wrap}
+.timeline{position:relative;display:grid;gap:12px}
+.timeline-item{display:grid;grid-template-columns:14px 1fr;gap:10px;align-items:start}
+.timeline-dot{width:10px;height:10px;border-radius:50%;margin-top:5px;background:var(--brand)}
+.progress{height:8px;background:var(--surface3);border-radius:999px;overflow:hidden}
+.progress span{display:block;height:100%;background:var(--brand);border-radius:999px}
+.risk-meter{height:10px;background:linear-gradient(90deg,var(--green),var(--amber),var(--red));border-radius:999px;position:relative}
+.risk-meter::after{content:"";position:absolute;top:-4px;width:4px;height:18px;border-radius:99px;background:var(--text);left:var(--pos,50%)}
+.chart{height:220px;display:flex;align-items:end;gap:10px;padding:18px 14px 12px;border-top:1px solid var(--border)}
+.bar{flex:1;min-width:20px;border-radius:6px 6px 0 0;background:linear-gradient(180deg,var(--brand),var(--blue));position:relative}
+.bar span{position:absolute;bottom:calc(100% + 7px);left:50%;transform:translateX(-50%);font-size:11px;color:var(--muted);font-weight:800}
+.bar-labels{display:grid;grid-template-columns:repeat(8,1fr);gap:10px;padding:0 14px 14px;color:var(--muted);font-size:11px;font-weight:800;text-align:center}
+.bar-labels span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.panel.map-large{min-height:520px;display:flex;flex-direction:column}
+.map-large .venue-map{flex:1;min-height:360px;border-left:0;border-right:0;border-bottom:0;border-radius:0}
+.resource-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.resource-card{border:1px solid var(--border);border-radius:8px;background:var(--surface);padding:14px;display:grid;gap:10px}
+.mobile-nav{display:none}
+.toast-wrap{position:fixed;right:18px;bottom:18px;z-index:100;display:grid;gap:10px;width:min(360px,calc(100vw - 36px))}
+.toast{background:var(--surface);border:1px solid var(--border);border-left:4px solid var(--brand);box-shadow:var(--shadow);border-radius:8px;padding:12px 14px;animation:toast-in .18s ease both}
+.toast strong{display:block;font-size:13px;margin-bottom:3px}
+.toast span{font-size:12px;color:var(--muted);line-height:1.4}
+@keyframes toast-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:1080px){
+  .landing-main{grid-template-columns:1fr}
+  .portal-grid,.grid-4{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .grid-3{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .shell{grid-template-columns:1fr}
+  .sidebar{display:none}
+  .content-top{top:0}
+  .mobile-nav{display:flex;position:fixed;left:0;right:0;bottom:0;height:64px;background:var(--surface);border-top:1px solid var(--border);z-index:50;overflow:auto}
+  .mobile-nav .nav-item{min-width:88px;justify-content:center;flex-direction:column;gap:4px;border-radius:0;padding:7px 8px;font-size:10px}
+  .page{padding:20px 16px 84px}
+}
+@media(max-width:720px){
+  .topbar,.content-top{padding:0 14px}
+  .brand-title span:last-child{display:none}
+  .landing-main{padding:28px 14px 36px}
+  .hero h1{font-size:33px}
+  .proof-grid,.portal-grid,.grid-2,.grid-3,.grid-4,.resource-grid,.form-grid{grid-template-columns:1fr}
+  .page-title{flex-direction:column}
+  .toolbar{width:100%}
+  .toolbar .btn{flex:1}
+  .field-full{grid-column:auto}
+  .panel.map-large{min-height:420px}
+}
+</style>
+</head>
+<body>
+<div id="app" class="app"></div>
+<div id="toastWrap" class="toast-wrap"></div>
+<script>
+const icons={
+  shield:'<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>',
+  users:'<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
+  user:'<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',
+  radio:'<path d="M4.9 19.1C1 15.2 1 8.8 4.9 4.9"/><path d="M7.8 16.2a6 6 0 0 1 0-8.5"/><circle cx="12" cy="12" r="2"/><path d="M16.2 7.8a6 6 0 0 1 0 8.5"/><path d="M19.1 4.9c3.9 3.9 3.9 10.2 0 14.1"/>',
+  alert:'<path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4"/><path d="M12 17h.01"/>',
+  bell:'<path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/>',
+  map:'<path d="m3 6 6-3 6 3 6-3v15l-6 3-6-3-6 3V6z"/><path d="M9 3v15"/><path d="M15 6v15"/>',
+  chart:'<path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/>',
+  clipboard:'<path d="M9 5h6"/><path d="M9 12h6"/><path d="M9 17h4"/><path d="M8 3h8l1 2h3v16H4V5h3l1-2z"/>',
+  settings:'<path d="M12 15.5A3.5 3.5 0 1 0 12 8a3.5 3.5 0 0 0 0 7.5z"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1A2 2 0 1 1 4.2 17l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.6-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1A2 2 0 1 1 7 4.2l.1.1a1.7 1.7 0 0 0 1.9.3h.1a1.7 1.7 0 0 0 1-1.6V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.6h.1a1.7 1.7 0 0 0 1.9-.3l.1-.1A2 2 0 1 1 19.8 7l-.1.1a1.7 1.7 0 0 0-.3 1.9v.1a1.7 1.7 0 0 0 1.6 1h.1a2 2 0 1 1 0 4H21a1.7 1.7 0 0 0-1.6 1z"/>',
+  moon:'<path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z"/>',
+  sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.9 4.9 1.4 1.4"/><path d="m17.7 17.7 1.4 1.4"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.3 17.7-1.4 1.4"/><path d="m19.1 4.9-1.4 1.4"/>',
+  logOut:'<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/>',
+  plus:'<path d="M12 5v14"/><path d="M5 12h14"/>',
+  check:'<path d="m20 6-11 11-5-5"/>',
+  x:'<path d="M18 6 6 18"/><path d="m6 6 12 12"/>',
+  route:'<circle cx="6" cy="19" r="3"/><circle cx="18" cy="5" r="3"/><path d="M6 16v-4a4 4 0 0 1 4-4h4"/><path d="M14 8l4-3"/>',
+  send:'<path d="m22 2-7 20-4-9-9-4 20-7z"/><path d="M22 2 11 13"/>',
+  scan:'<path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><path d="M7 12h10"/>',
+  file:'<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8"/><path d="M8 17h8"/><path d="M8 9h2"/>',
+  lock:'<rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>',
+  search:'<circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>',
+  building:'<path d="M3 21h18"/><path d="M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16"/><path d="M9 7h1"/><path d="M14 7h1"/><path d="M9 11h1"/><path d="M14 11h1"/><path d="M9 15h1"/><path d="M14 15h1"/>',
+  activity:'<path d="M22 12h-4l-3 8-6-16-3 8H2"/>'
+};
+const I=(name,extra='')=>`<svg class="icon ${extra}" viewBox="0 0 24 24" aria-hidden="true">${icons[name]||icons.shield}</svg>`;
+
+const state={
+  mode:localStorage.getItem('sf-mode')||'light',
+  screen:'landing',
+  role:null,
+  page:null,
+  user:{name:'Aarav Shah',rfid:'SF-2026-041',zone:'North Concourse', seat:'Block B - Row 14'},
+  staffUser:{name:'Ravi Kumar',id:'S-104',zone:'Main Stage',shift:'14:00 - 22:00'},
+  adminUser:{name:'Venue Administrator',id:'A-001'},
+  anonymous:false,
+  alerts:[
+    {id:'ALT-1048',severity:'critical',title:'Crowd density rising at Main Stage',audience:'All users, stage staff, command',zone:'Main Stage',time:'14:42',message:'Main Stage is at 91 percent density. Use East Concourse for movement and follow staff routing.',ack:74,read:false,channel:'App, SMS, PA'},
+    {id:'ALT-1047',severity:'medium',title:'Gate C queue delay',audience:'Gate C ticket holders and gate staff',zone:'Gate C',time:'14:31',message:'Additional staff deployed. Expected wait time is 9 minutes.',ack:88,read:true,channel:'App'},
+    {id:'ALT-1046',severity:'low',title:'Weather watch',audience:'All users',zone:'Open Arena',time:'14:05',message:'Light rain forecast in 45 minutes. Covered routes are marked in the resource map.',ack:93,read:false,channel:'App, Email'}
+  ],
+  incidents:[
+    {id:'INC-2207',type:'Crowd Risk',severity:'high',zone:'Main Stage',location:'Front-left barricade',reporter:'Staff: Priya Sharma',status:'Triage',owner:'Ravi Kumar',sla:'11 min',created:'14:38',description:'Density spike after performance change. Barrier line requires reinforcement.',affected:'40-60 people',evidence:'Photo attached',actions:['Dispatch two field stewards','Open East relief lane']},
+    {id:'INC-2206',type:'Medical',severity:'critical',zone:'Food Court',location:'Vendor lane 3',reporter:'User: SF-2026-041',status:'Responding',owner:'Medical Team 2',sla:'4 min',created:'14:35',description:'Guest reported dizziness and dehydration symptoms near vendor lane.',affected:'1 person',evidence:'No file',actions:['Medical team dispatched','Water station notified']},
+    {id:'INC-2205',type:'Infrastructure',severity:'medium',zone:'West Exit',location:'Exit W2 lighting panel',reporter:'Staff: Deepa Nair',status:'Assigned',owner:'Facilities',sla:'22 min',created:'14:18',description:'Intermittent emergency light flicker reported in exit corridor.',affected:'Exit corridor users',evidence:'Video attached',actions:['Facilities inspection','Temporary directional signage']},
+    {id:'INC-2204',type:'Lost Property',severity:'low',zone:'Gate A',location:'Ticket scan lane 2',reporter:'User: Kavya Reddy',status:'Closed',owner:'Guest Services',sla:'Closed',created:'13:52',description:'Phone found and transferred to guest services desk.',affected:'1 person',evidence:'Item record',actions:['Owner verified','Item returned']}
+  ],
+  myReports:[
+    {id:'RPT-7103',type:'Medical',status:'Responding',time:'14:35',summary:'Assistance requested near Food Court'},
+    {id:'RPT-7091',type:'Lost Property',status:'Closed',time:'13:52',summary:'Phone inquiry at Gate A'}
+  ],
+  zones:[
+    {id:'Z-A',name:'Main Stage',density:91,status:'High',gate:'Gate B',staff:18,response:'2 min'},
+    {id:'Z-B',name:'Food Court',density:68,status:'Watch',gate:'Gate C',staff:10,response:'4 min'},
+    {id:'Z-C',name:'North Concourse',density:46,status:'Normal',gate:'Gate A',staff:8,response:'5 min'},
+    {id:'Z-D',name:'VIP Deck',density:53,status:'Normal',gate:'Gate D',staff:6,response:'3 min'},
+    {id:'Z-E',name:'West Exit',density:34,status:'Normal',gate:'Gate E',staff:5,response:'6 min'}
+  ],
+  staff:[
+    {id:'S-101',name:'Priya Sharma',role:'Zone Lead',zone:'Main Stage',status:'Active',last:'14:44',load:'High'},
+    {id:'S-104',name:'Ravi Kumar',role:'Security Lead',zone:'Main Stage',status:'Active',last:'14:45',load:'Medium'},
+    {id:'S-112',name:'Deepa Nair',role:'Facilities',zone:'West Exit',status:'On task',last:'14:39',load:'Medium'},
+    {id:'S-118',name:'Meera Singh',role:'Medical',zone:'Food Court',status:'Responding',last:'14:43',load:'High'},
+    {id:'S-126',name:'Arjun Mehta',role:'Guest Services',zone:'Gate A',status:'Active',last:'14:41',load:'Low'}
+  ],
+  attendees:[
+    {rfid:'SF-2026-041',name:'Aarav Shah',zone:'North Concourse',status:'Inside',risk:'Normal',contact:'Verified'},
+    {rfid:'SF-2026-014',name:'Kavya Reddy',zone:'Gate A',status:'Inside',risk:'Normal',contact:'Verified'},
+    {rfid:'SF-2026-083',name:'Rohan Verma',zone:'Main Stage',status:'Inside',risk:'Watch',contact:'Verified'},
+    {rfid:'SF-2026-109',name:'Sneha Joshi',zone:'Food Court',status:'Inside',risk:'Medical note',contact:'Missing backup'},
+    {rfid:'SF-2026-176',name:'Ishaan Gupta',zone:'Outside',status:'Exited',risk:'Normal',contact:'Verified'}
+  ],
+  resources:[
+    {name:'Medical Team 1',type:'Medical',zone:'Main Stage',status:'Available',eta:'2 min',stock:82},
+    {name:'Medical Team 2',type:'Medical',zone:'Food Court',status:'Responding',eta:'4 min',stock:64},
+    {name:'Evacuation Lane East',type:'Route',zone:'East Concourse',status:'Open',eta:'Ready',stock:100},
+    {name:'Barricade Kit 3',type:'Infrastructure',zone:'Main Stage',status:'Deploying',eta:'6 min',stock:56},
+    {name:'Radio Pool',type:'Communication',zone:'Command',status:'Available',eta:'Ready',stock:91},
+    {name:'Water Station B',type:'Welfare',zone:'Food Court',status:'Open',eta:'Ready',stock:48}
+  ],
+  checklists:[
+    {id:'CHK-302',name:'Main Stage crowd barrier inspection',owner:'Priya Sharma',due:'15:00',progress:72,status:'In progress'},
+    {id:'CHK-301',name:'Emergency exit lighting sweep',owner:'Facilities',due:'15:30',progress:45,status:'In progress'},
+    {id:'CHK-298',name:'Medical stock and AED readiness',owner:'Meera Singh',due:'16:00',progress:88,status:'On track'}
+  ],
+  audit:[
+    {time:'14:45',actor:'Command',action:'Alert ALT-1048 sent to all users and staff',type:'Alert'},
+    {time:'14:43',actor:'Ravi Kumar',action:'Assigned INC-2207 to Main Stage response unit',type:'Incident'},
+    {time:'14:40',actor:'System',action:'Main Stage density crossed 90 percent threshold',type:'Automation'},
+    {time:'14:35',actor:'User SF-2026-041',action:'Submitted medical report RPT-7103',type:'Report'},
+    {time:'14:12',actor:'Admin',action:'Gate C queue threshold updated to 10 minutes',type:'Settings'}
+  ],
+  settings:{capacityThreshold:85,autoEscalate:true,sms:true,email:true,pa:false,anonymous:true,medicalPrivacy:true}
+};
+
+document.documentElement.setAttribute('data-mode',state.mode);
+
+function modeButton(){
+  return `<button class="btn btn-ghost btn-sm" onclick="toggleMode()">${I(state.mode==='dark'?'sun':'moon')} ${state.mode==='dark'?'Light':'Dark'} mode</button>`;
+}
+function toggleMode(){
+  state.mode=state.mode==='dark'?'light':'dark';
+  localStorage.setItem('sf-mode',state.mode);
+  document.documentElement.setAttribute('data-mode',state.mode);
+  render();
+}
+function statusBadge(value){
+  const v=String(value).toLowerCase();
+  const cls=v.includes('critical')||v.includes('high')||v.includes('overdue')?'badge-red':v.includes('medium')||v.includes('watch')||v.includes('triage')||v.includes('assigned')||v.includes('responding')||v.includes('progress')?'badge-amber':v.includes('low')||v.includes('closed')||v.includes('normal')||v.includes('open')||v.includes('available')||v.includes('active')||v.includes('ready')||v.includes('verified')?'badge-green':'badge-muted';
+  return `<span class="badge ${cls}">${value}</span>`;
+}
+function sevBadge(sev){
+  const map={critical:'badge-red',high:'badge-red',medium:'badge-amber',low:'badge-green'};
+  return `<span class="badge ${map[String(sev).toLowerCase()]||'badge-muted'}">${sev}</span>`;
+}
+function toast(title,msg,type='info'){
+  const wrap=document.getElementById('toastWrap');
+  const border=type==='danger'?'var(--red)':type==='success'?'var(--green)':type==='warn'?'var(--amber)':'var(--brand)';
+  const node=document.createElement('div');
+  node.className='toast';
+  node.style.borderLeftColor=border;
+  node.innerHTML=`<strong>${title}</strong><span>${msg}</span>`;
+  wrap.appendChild(node);
+  setTimeout(()=>node.remove(),4200);
+}
+function setScreen(screen){
+  state.screen=screen;
+  render();
+}
+function openPortal(role){
+  state.screen='portal';
+  state.role=role;
+  state.page={user:'overview',staff:'overview',admin:'command'}[role];
+  render();
+  toast('Session opened',`${roleLabel(role)} workspace is ready.`,'success');
+}
+function roleLabel(role){
+  return role==='user'?'User Portal':role==='staff'?'Staff Portal':'Admin Command Center';
+}
+function setPage(page){
+  state.page=page;
+  render();
+}
+function riskFromDensity(d){
+  return d>=85?'High':d>=65?'Watch':'Normal';
+}
+function initials(name){
+  return name.split(' ').map(p=>p[0]).join('').slice(0,2).toUpperCase();
+}
+function escapeHtml(str){
+  return String(str||'').replace(/[&<>"']/g,m=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;' }[m]));
+}
+
+function render(){
+  document.getElementById('app').innerHTML=state.screen==='landing'?landing():portal();
+  if(state.screen==='portal') afterPortalRender();
+}
+
+function landing(){
+  return `<div class="landing">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark">${I('shield')}</div>
+        <div class="brand-title"><span>SafeFlow</span><span>Safety operations platform</span></div>
+      </div>
+      <div class="toolbar">${modeButton()}</div>
+    </header>
+    <main class="landing-main">
+      <section class="hero">
+        <h1>Professional command, response, and safety intelligence for high-density venues.</h1>
+        <p>SafeFlow combines incident reporting, targeted alerts, staff dispatch, live capacity monitoring, corrective actions, and compliance records across user, staff, and administrator portals.</p>
+        <div class="hero-actions">
+          <button class="btn btn-primary" onclick="openPortal('admin')">${I('shield')} Present command center</button>
+          <button class="btn btn-outline" onclick="openPortal('user')">${I('user')} Open user portal</button>
+          <button class="btn btn-outline" onclick="openPortal('staff')">${I('radio')} Open staff portal</button>
+        </div>
+        <div class="proof-grid">
+          <div class="proof"><div class="value mono">24,680</div><div class="label">Current checked-in population</div></div>
+          <div class="proof"><div class="value mono">94%</div><div class="label">Critical alert acknowledgement</div></div>
+          <div class="proof"><div class="value mono">4.1m</div><div class="label">Average response time</div></div>
+        </div>
+      </section>
+      <section class="ops-board">
+        <div class="ops-head">
+          <div><div class="ops-title">Live venue operating picture</div><div class="panel-sub">Simulated for presentation and product walkthrough</div></div>
+          ${statusBadge('Operational')}
+        </div>
+        <div class="ops-body">
+          ${miniMap()}
+          <div class="grid grid-3">
+            <div class="stat"><div class="stat-top"><div class="stat-icon">${I('alert')}</div>${statusBadge('High')}</div><div class="stat-value mono">3</div><div class="stat-label">Open priority incidents</div></div>
+            <div class="stat"><div class="stat-top"><div class="stat-icon">${I('users')}</div>${statusBadge('Watch')}</div><div class="stat-value mono">91%</div><div class="stat-label">Main Stage density</div></div>
+            <div class="stat"><div class="stat-top"><div class="stat-icon">${I('activity')}</div>${statusBadge('Normal')}</div><div class="stat-value mono">98.2%</div><div class="stat-label">System availability</div></div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <section class="portal-grid" style="max-width:1180px;margin:0 auto 34px;padding:0 24px;width:100%;">
+      ${portalCard('user','User Portal','Report incidents, receive verified alerts, acknowledge safety notices, track your submitted reports, and locate nearby resources.',['Incident reports','Safety alerts','Resource map'])}
+      ${portalCard('staff','Staff Portal','Triage field reports, scan entries, run checklists, coordinate resources, and submit staff-originated incidents.',['Triage queue','Shift checklist','Resource dispatch'])}
+      ${portalCard('admin','Admin Portal','Manage command operations, targeted broadcasts, investigations, analytics, compliance, staffing, and escalation policy.',['Command center','Analytics','Compliance audit'])}
+    </section>
+    <div class="source-note">Feature scope was informed by common patterns in safety operations products: digital inspections and incident reporting, two-way emergency communication, live responder status, mass notifications, and resource registries.</div>
+  </div>`;
+}
+function portalCard(role,title,copy,features){
+  return `<button class="portal-card" onclick="openPortal('${role}')">
+    <div class="portal-top"><div class="portal-icon">${I(role==='user'?'user':role==='staff'?'radio':'shield','icon-lg')}</div>${statusBadge(role==='admin'?'Executive':'Role based')}</div>
+    <div><h2>${title}</h2><p>${copy}</p></div>
+    <ul class="feature-list">${features.map(f=>`<li><span class="check-dot"></span>${f}</li>`).join('')}</ul>
+  </button>`;
+}
+function miniMap(large=false){
+  return `<div class="venue-map ${large?'map-large-inner':''}">
+    <div class="map-grid"></div>
+    <div class="zone-node node-high" style="left:10%;top:16%;"><div class="zn-title">Main Stage</div><div class="zn-meta">91% density - High</div></div>
+    <div class="zone-node node-watch" style="right:9%;top:20%;"><div class="zn-title">Food Court</div><div class="zn-meta">68% density - Watch</div></div>
+    <div class="zone-node node-safe" style="left:13%;bottom:16%;"><div class="zn-title">Gate A</div><div class="zn-meta">6 min queue - Normal</div></div>
+    <div class="zone-node node-safe" style="right:12%;bottom:14%;"><div class="zn-title">West Exit</div><div class="zn-meta">Open evacuation route</div></div>
+    <div class="zone-node node-safe" style="left:42%;top:43%;"><div class="zn-title">Command</div><div class="zn-meta">All systems online</div></div>
+    <span class="pulse" style="left:28%;top:29%;"></span>
+    <span class="pulse" style="right:28%;top:36%;background:var(--amber);box-shadow:0 0 0 6px rgba(180,83,9,.14);"></span>
+  </div>`;
+}
+
+function portal(){
+  const nav=navItems(state.role);
+  const user=state.role==='user'?state.user:state.role==='staff'?state.staffUser:state.adminUser;
+  return `<div class="shell">
+    <aside class="sidebar">
+      <div class="side-head">
+        <div class="brand">
+          <div class="brand-mark">${I('shield')}</div>
+          <div class="brand-title"><span>SafeFlow</span><span>${roleLabel(state.role)}</span></div>
+        </div>
+        <div class="role-chip">${I(state.role==='user'?'user':state.role==='staff'?'radio':'lock')} ${escapeHtml(user.name)}</div>
+      </div>
+      <nav class="side-nav">${nav.map(n=>navButton(n)).join('')}</nav>
+      <div class="side-foot">
+        ${modeButton()}
+        <button class="btn btn-outline btn-sm" onclick="setScreen('landing')">${I('logOut')} Exit portal</button>
+      </div>
+    </aside>
+    <section class="content">
+      <div class="content-top">
+        <div class="brand">
+          <div class="brand-mark">${I(state.role==='user'?'user':state.role==='staff'?'radio':'shield')}</div>
+          <div class="brand-title"><span>${roleLabel(state.role)}</span><span>${escapeHtml(user.name)}</span></div>
+        </div>
+        <div class="toolbar">
+          ${modeButton()}
+          <button class="btn btn-outline btn-sm" onclick="setScreen('landing')">${I('logOut')} Exit</button>
+        </div>
+      </div>
+      <main class="page">${renderPage()}</main>
+      <nav class="mobile-nav">${nav.map(n=>navButton(n)).join('')}</nav>
+    </section>
+  </div>`;
+}
+function navItems(role){
+  if(role==='user')return[
+    ['overview','Overview','shield'],['report','Report','plus'],['alerts','Alerts','bell'],['resources','Resources','map']
+  ];
+  if(role==='staff')return[
+    ['overview','Overview','shield'],['incidents','Incidents','alert'],['scanner','Scanner','scan'],['alerts','Alerts','bell'],['checklists','Checklists','clipboard'],['resources','Resources','map']
+  ];
+  return[
+    ['command','Command','shield'],['incidents','Incidents','alert'],['map','Live Map','map'],['analytics','Analytics','chart'],['people','People','users'],['alerts','Alerts','bell'],['compliance','Compliance','file'],['settings','Settings','settings']
+  ];
+}
+function navButton(n){
+  return `<button class="nav-item ${state.page===n[0]?'active':''}" onclick="setPage('${n[0]}')">${I(n[2])}<span>${n[1]}</span></button>`;
+}
+function pageTitle(title,sub,actions=''){
+  return `<div class="page-title"><div><h1>${title}</h1><p>${sub}</p></div><div class="toolbar">${actions}</div></div>`;
+}
+function renderPage(){
+  if(state.role==='user')return userPage();
+  if(state.role==='staff')return staffPage();
+  return adminPage();
+}
+function afterPortalRender(){
+  if(state.page==='analytics')drawCharts();
+}
+
+function userPage(){
+  if(state.page==='report')return userReportPage();
+  if(state.page==='alerts')return userAlertsPage();
+  if(state.page==='resources')return userResourcesPage();
+  return userOverviewPage();
+}
+function userOverviewPage(){
+  return `${pageTitle('User safety dashboard','Your verified alerts, venue status, personal reports, and nearby support resources.',`<button class="btn btn-primary" onclick="setPage('report')">${I('plus')} Report incident</button>`)}
+  <div class="grid grid-4">
+    ${stat('Current status','Normal','Inside - North Concourse','shield','trend-good')}
+    ${stat('Open reports',state.myReports.filter(r=>r.status!=='Closed').length,'Tracked by command','file','trend-watch')}
+    ${stat('Nearest support','120 m','First aid and water station','map','trend-good')}
+    ${stat('Alert acknowledgement','3 of 4','One critical notice pending','bell','trend-watch')}
+  </div>
+  <div class="grid grid-2" style="margin-top:16px;">
+    <section class="panel">
+      <div class="panel-head"><div><div class="panel-title">Priority alert</div><div class="panel-sub">Acknowledge critical and location-based notices</div></div>${sevBadge('critical')}</div>
+      <div class="panel-pad">
+        ${alertSummary(state.alerts[0],true)}
+      </div>
+    </section>
+    <section class="panel">
+      <div class="panel-head"><div><div class="panel-title">Safe route recommendation</div><div class="panel-sub">Routing avoids current high-density zones</div></div>${statusBadge('Open')}</div>
+      <div class="panel-pad">
+        ${miniMap()}
+        <div class="toolbar" style="margin-top:12px;">
+          <button class="btn btn-primary btn-sm" onclick="toast('Route saved','East Concourse route added to your active guidance.','success')">${I('route')} Use East Concourse</button>
+          <button class="btn btn-outline btn-sm" onclick="toast('Support requested','A staff member has been notified of your location.','success')">${I('send')} Request assistance</button>
+        </div>
+      </div>
+    </section>
+  </div>
+  <div class="grid grid-2" style="margin-top:16px;">
+    <section class="panel">
+      <div class="panel-head"><div><div class="panel-title">My submitted reports</div><div class="panel-sub">Status updates from staff and command</div></div><button class="btn btn-ghost btn-sm" onclick="setPage('report')">${I('plus')} New</button></div>
+      <div class="row-list">${state.myReports.map(reportRow).join('')}</div>
+    </section>
+    <section class="panel">
+      <div class="panel-head"><div><div class="panel-title">Useful services</div><div class="panel-sub">Accessible, operational support points</div></div></div>
+      <div class="resource-grid" style="padding:16px;">
+        ${resourceMini('First Aid','Medical Team 1 - 120 m','Available','activity')}
+        ${resourceMini('Water','Station B - 180 m','Open','map')}
+        ${resourceMini('Lost Property','Gate A desk','Open','file')}
+      </div>
+    </section>
+  </div>`;
+}
+function userReportPage(){
+  return `${pageTitle('Report an incident','Submit a structured, privacy-aware incident report directly to staff and command.',`<button class="btn btn-outline" onclick="setPage('overview')">${I('shield')} Dashboard</button>`)}
+  <div class="grid grid-2">
+    <section class="panel">
+      <div class="panel-head"><div><div class="panel-title">Incident details</div><div class="panel-sub">All fields are used for triage priority and routing</div></div>${statusBadge('Secure')}</div>
+      <form class="panel-pad form-grid" onsubmit="submitUserReport(event)">
+        <div><label for="u-type">Incident category</label><select id="u-type" required><option>Medical</option><option>Security</option><option>Crowd Risk</option><option>Harassment</option><option>Fire or Smoke</option><option>Infrastructure</option><option>Lost Property</option><option>Accessibility Support</option></select></div>
+        <div><label for="u-sev">Severity</label><select id="u-sev" required><option>low</option><option selected>medium</option><option>high</option><option>critical</option></select></div>
+        <div><label for="u-zone">Zone</label><select id="u-zone" required>${state.zones.map(z=>`<option>${z.name}</option>`).join('')}</select></div>
+        <div><label for="u-people">People affected</label><input id="u-people" placeholder="Example: 1 person, small group"/></div>
+        <div class="field-full"><label for="u-loc">Specific location</label><input id="u-loc" placeholder="Example: Food Court, vendor lane 3" required/></div>
+        <div class="field-full"><label for="u-desc">Description</label><textarea id="u-desc" placeholder="What happened, what you can see, and whether immediate support is needed." required></textarea></div>
+        <div><label for="u-contact">Contact preference</label><select id="u-contact"><option>App notification</option><option>Phone call</option><option>SMS</option><option>No direct follow-up</option></select></div>
+        <div><label for="u-evidence">Evidence</label><input id="u-evidence" type="file"/></div>
+        <div class="field-full switch-line">
+          <button type="button" class="switch ${state.anonymous?'on':''}" onclick="state.anonymous=!state.anonymous;render()" aria-label="Toggle anonymous reporting"></button>
+          <div><div class="strong">Submit anonymously</div><div class="row-sub">Identity is hidden from field staff but retained for emergency administrators when required by policy.</div></div>
+        </div>
+        <div class="field-full toolbar"><button class="btn btn-primary" type="submit">${I('send')} Submit report</button><button class="btn btn-outline" type="reset">${I('x')} Clear</button></div>
+      </form>
+    </section>
+    <section class="panel">
+      <div class="panel-head"><div><div class="panel-title">Triage model</div><div class="panel-sub">How SafeFlow routes the report after submission</div></div></div>
+      <div class="panel-pad">
+        <div class="timeline">
+          ${timelineItem('1','Validate location, severity, and reporter safety context')}
+          ${timelineItem('2','Route to nearest staff team and command queue')}
+          ${timelineItem('3','Notify user with accepted, assigned, responding, and closed states')}
+          ${timelineItem('4','Attach corrective action for recurring or systemic risks')}
+        </div>
+      </div>
+    </section>
+  </div>`;
+}
+function userAlertsPage(){
+  return `${pageTitle('Alerts and guidance','Verified safety notices with acknowledgement, location targeting, and clear action status.',`<button class="btn btn-primary" onclick="ackAllAlerts()">${I('check')} Acknowledge all</button>`)}
+  <div class="grid grid-3">
+    ${stat('Unread alerts',state.alerts.filter(a=>!a.read).length,'Awaiting acknowledgement','bell','trend-watch')}
+    ${stat('Critical notices',state.alerts.filter(a=>a.severity==='critical').length,'Requires immediate attention','alert','trend-risk')}
+    ${stat('Average ack rate','85%','Across current venue alerts','chart','trend-good')}
+  </div>
+  <section class="panel" style="margin-top:16px;">
+    <div class="panel-head"><div><div class="panel-title">Alert feed</div><div class="panel-sub">Filtered to your location, access level, and safety relevance</div></div></div>
+    <div class="row-list">${state.alerts.map(a=>alertSummary(a,false)).join('')}</div>
+  </section>`;
+}
+function userResourcesPage(){
+  return `${pageTitle('Resources and assistance','Find immediate support, venue services, safe routes, and emergency contacts.',`<button class="btn btn-primary" onclick="toast('Assistance requested','Your current location was shared with the nearest active staff lead.','success')">${I('send')} Request staff</button>`)}
+  <div class="grid grid-2">
+    <section class="panel map-large"><div class="panel-head"><div><div class="panel-title">Venue resource map</div><div class="panel-sub">Routes, aid points, service desks, and high-density zones</div></div></div>${miniMap(true)}</section>
+    <section class="panel">
+      <div class="panel-head"><div><div class="panel-title">Support directory</div><div class="panel-sub">Operational contacts and service status</div></div></div>
+      <div class="row-list">
+        ${contactRow('National emergency','112','Immediate life-safety emergency')}
+        ${contactRow('Medical desk','108','On-site medical support and ambulance coordination')}
+        ${contactRow('Fire services','101','Fire, smoke, and evacuation events')}
+        ${contactRow('Police control','100','Security and law enforcement coordination')}
+        ${contactRow('Accessibility support','+91 22 4000 1188','Mobility, sensory, and assisted movement support')}
+      </div>
+    </section>
+  </div>
+  <section class="panel" style="margin-top:16px;">
+    <div class="panel-head"><div><div class="panel-title">Available resources</div><div class="panel-sub">Current operational capacity</div></div></div>
+    <div class="resource-grid" style="padding:16px;">${state.resources.map(r=>resourceCard(r)).join('')}</div>
+  </section>`;
+}
+function submitUserReport(e){
+  e.preventDefault();
+  const id=`INC-${2208+state.incidents.length}`;
+  const type=document.getElementById('u-type').value;
+  const severity=document.getElementById('u-sev').value;
+  const zone=document.getElementById('u-zone').value;
+  const location=escapeHtml(document.getElementById('u-loc').value);
+  const description=escapeHtml(document.getElementById('u-desc').value);
+  const affected=escapeHtml(document.getElementById('u-people').value||'Not specified');
+  const reporter=state.anonymous?'Anonymous user':`User: ${state.user.rfid}`;
+  state.incidents.unshift({id,type,severity,zone,location,reporter,status:'Triage',owner:'Unassigned',sla:'15 min',created:currentTime(),description,affected,evidence:'Pending review',actions:['Command triage','Nearest staff notification']});
+  state.myReports.unshift({id:id.replace('INC','RPT'),type,status:'Submitted',time:currentTime(),summary:`${type} at ${location}`});
+  state.audit.unshift({time:currentTime(),actor:reporter,action:`Submitted ${type} report ${id}`,type:'Report'});
+  state.anonymous=false;
+  state.page='overview';
+  render();
+  toast('Report submitted',`${id} has been routed to staff triage and command.`,severity==='critical'?'danger':'success');
+}
+
+function staffPage(){
+  if(state.page==='incidents')return staffIncidentsPage();
+  if(state.page==='scanner')return staffScannerPage();
+  if(state.page==='alerts')return staffAlertsPage();
+  if(state.page==='checklists')return staffChecklistsPage();
+  if(state.page==='resources')return staffResourcesPage();
+  return staffOverviewPage();
+}
+function staffOverviewPage(){
+  const open=state.incidents.filter(i=>i.status!=='Closed').length;
+  return `${pageTitle('Staff operations dashboard','Shift assignment, incident queue, density warnings, and field resources.',`<button class="btn btn-primary" onclick="setPage('incidents')">${I('plus')} Log incident</button>`)}
+  <div class="grid grid-4">
+    ${stat('Assigned zone',state.staffUser.zone,'Security lead on active shift','radio','trend-good')}
+    ${stat('Open incidents',open,'Across assigned and nearby zones','alert','trend-watch')}
+    ${stat('Critical response','4 min','Fastest active SLA','activity','trend-risk')}
+    ${stat('Checklist progress','68%','Three tasks due this shift','clipboard','trend-watch')}
+  </div>
+  <div class="grid grid-2" style="margin-top:16px;">
+    <section class="panel">
+      <div class="panel-head"><div><div class="panel-title">Priority queue</div><div class="panel-sub">Triage and response assignments</div></div><button class="btn btn-ghost btn-sm" onclick="setPage('incidents')">${I('alert')} Manage</button></div>
+      <div class="row-list">${state.incidents.filter(i=>i.status!=='Closed').slice(0,4).map(incidentRow).join('')}</div>
+    </section>
+    <section class="panel">
+      <div class="panel-head"><div><div class="panel-title">Zone status</div><div class="panel-sub">Capacity, response readiness, and staff coverage</div></div></div>
+      <div class="row-list">${state.zones.map(zoneRow).join('')}</div>
+    </section>
+  </div>
+  <div class="grid grid-2" style="margin-top:16px;">
+    <section class="panel">
+      <div class="panel-head"><div><div class="panel-title">Active alert acknowledgement</div><div class="panel-sub">Staff can see whether audiences received critical notices</div></div></div>
+      <div class="panel-pad">${state.alerts.slice(0,2).map(a=>alertSummary(a,true)).join('')}</div>
+    </section>
+    <section class="panel">
+      <div class="panel-head"><div><div class="panel-title">Handover notes</div><div class="panel-sub">Operational continuity for next shift</div></div></div>
+      <div class="row-list">
+        ${noteRow('14:44','East relief lane opened for Main Stage movement.')}
+        ${noteRow('14:36','Food Court medical call active; avoid sending non-essential staff.')}
+        ${noteRow('14:21','Gate C scanner 2 was recalibrated and is stable.')}
+      </div>
+    </section>
+  </div>`;
+}
+function staffIncidentsPage(){
+  return `${pageTitle('Incident triage and reporting','Create staff-originated reports, assign ownership, update status, and record corrective actions.',`<button class="btn btn-primary" onclick="focusStaffForm()">${I('plus')} Staff report</button>`)}
+  <div class="grid grid-2">
+    <section class="panel">
+      <div class="panel-head"><div><div class="panel-title">Staff incident intake</div><div class="panel-sub">Use for field observations, escalations, and user-assisted reports</div></div></div>
+      <form id="staffIncidentForm" class="panel-pad form-grid" onsubmit="submitStaffIncident(event)">
+        <div><label for="s-type">Category</label><select id="s-type"><option>Crowd Risk</option><option>Medical</option><option>Security</option><option>Fire or Smoke</option><option>Infrastructure</option><option>Harassment</option><option>Lost Property</option></select></div>
+        <div><label for="s-sev">Severity</label><select id="s-sev"><option>low</option><option>medium</option><option selected>high</option><option>critical</option></select></div>
+        <div><label for="s-zone">Zone</label><select id="s-zone">${state.zones.map(z=>`<option>${z.name}</option>`).join('')}</select></div>
+        <div><label for="s-owner">Assign to</label><select id="s-owner"><option>Ravi Kumar</option><option>Medical Team 1</option><option>Facilities</option><option>Guest Services</option><option>Command Review</option></select></div>
+        <div class="field-full"><label for="s-loc">Exact location</label><input id="s-loc" placeholder="Example: Main Stage, left barricade" required/></div>
+        <div class="field-full"><label for="s-desc">Situation notes</label><textarea id="s-desc" placeholder="What happened, observed risk, action already taken." required></textarea></div>
+        <div class="field-full"><label for="s-action">Initial action</label><input id="s-action" placeholder="Example: Opened relief lane and notified command"/></div>
+        <div class="field-full toolbar"><button class="btn btn-primary" type="submit">${I('send')} Submit staff report</button><button class="btn btn-outline" type="reset">${I('x')} Clear</button></div>
+      </form>
+    </section>
+    <section class="panel">
+      <div class="panel-head"><div><div class="panel-title">Response queue</div><div class="panel-sub">Operational status and available actions</div></div>${statusBadge(`${state.incidents.filter(i=>i.status!=='Closed').length} open`)}</div>
+      <div class="row-list">${state.incidents.map(i=>incidentActionRow(i,'staff')).join('')}</div>
+    </section>
+  </div>`;
+}
+function staffScannerPage(){
+  return `${pageTitle('Gate scanner and access control','RFID lookup, manual exception handling, queue state, and watchlist checks.',`<button class="btn btn-primary" onclick="simulateScan()">${I('scan')} Simulate scan</button>`)}
+  <div class="grid grid-3">
+    ${stat('Gate assignment','Gate B','Main Stage inbound','scan','trend-good')}
+    ${stat('Queue wait','7 min','Two lanes active','activity','trend-watch')}
+    ${stat('Watchlist hits','1','Reviewed by command','alert','trend-risk')}
+  </div>
+  <div class="grid grid-2" style="margin-top:16px;">
+    <section class="panel">
+      <div class="panel-head"><div><div class="panel-title">Manual RFID lookup</div><div class="panel-sub">Validate identity, access, and safety notes</div></div></div>
+      <div class="panel-pad form-grid">
+        <div class="field-full"><label for="scanInput">RFID or name</label><input id="scanInput" value="SF-2026-041"/></div>
+        <div class="field-full toolbar"><button class="btn btn-primary" onclick="lookupScan()">${I('search')} Lookup</button><button class="btn btn-outline" onclick="simulateScan()">${I('scan')} Random scan</button></div>
+        <div id="scanResult" class="field-full"></div>
+      </div>
+    </section>
+    <section class="panel">
+      <div class="panel-head"><div><div class="panel-title">Recent scans</div><div class="panel-sub">Entry and exit events across assigned lanes</div></div></div>
+      <div class="row-list" id="scanFeed">
+        ${scanRow('14:45','SF-2026-041','Aarav Shah','Entry approved','Normal')}
+        ${scanRow('14:43','SF-2026-083','Rohan Verma','Entry approved','Watch')}
+        ${scanRow('14:40','SF-2026-176','Ishaan Gupta','Exit recorded','Normal')}
+      </div>
+    </section>
+  </div>`;
+}
+function staffAlertsPage(){
+  return `${pageTitle('Staff alerts and broadcast requests','Review active alerts, collect acknowledgements, and request command-approved broadcasts.',`<button class="btn btn-primary" onclick="submitStaffBroadcast()">${I('send')} Request broadcast</button>`)}
+  <div class="grid grid-2">
+    <section class="panel">
+      <div class="panel-head"><div><div class="panel-title">Broadcast request</div><div class="panel-sub">Requests enter admin approval before mass delivery</div></div></div>
+      <div class="panel-pad form-grid">
+        <div><label for="ba-sev">Priority</label><select id="ba-sev"><option>low</option><option selected>medium</option><option>high</option><option>critical</option></select></div>
+        <div><label for="ba-zone">Audience zone</label><select id="ba-zone"><option>All zones</option>${state.zones.map(z=>`<option>${z.name}</option>`).join('')}</select></div>
+        <div class="field-full"><label for="ba-msg">Message</label><textarea id="ba-msg" placeholder="Clear instruction for affected users and staff.">Use East Concourse for Main Stage movement. West barrier lane is temporarily restricted.</textarea></div>
+        <div class="field-full toolbar"><button class="btn btn-primary" onclick="submitStaffBroadcast()">${I('send')} Submit for command review</button></div>
+      </div>
+    </section>
+    <section class="panel">
+      <div class="panel-head"><div><div class="panel-title">Active alerts</div><div class="panel-sub">Staff-facing status and acknowledgement</div></div></div>
+      <div class="row-list">${state.alerts.map(a=>alertSummary(a,false)).join('')}</div>
+    </section>
+  </div>`;
+}
+function staffChecklistsPage(){
+  return `${pageTitle('Checklists and corrective actions','Shift inspections, safety checks, and close-loop actions after incidents.',`<button class="btn btn-primary" onclick="completeNextChecklist()">${I('check')} Mark next step</button>`)}
+  <div class="grid grid-3">
+    ${state.checklists.map(c=>`<section class="panel panel-pad">
+      <div class="incident-top"><div><div class="incident-id">${c.id}</div><div class="incident-title">${c.name}</div></div>${statusBadge(c.status)}</div>
+      <div class="row-sub">Owner: ${c.owner} - Due ${c.due}</div>
+      <div class="progress"><span style="width:${c.progress}%"></span></div>
+      <div class="toolbar"><button class="btn btn-outline btn-sm" onclick="toast('Checklist opened','${c.id} inspection details are ready for review.','success')">${I('clipboard')} Review</button></div>
+    </section>`).join('')}
+  </div>
+  <section class="panel" style="margin-top:16px;">
+    <div class="panel-head"><div><div class="panel-title">Corrective action register</div><div class="panel-sub">Actions linked to incidents and recurring risk patterns</div></div></div>
+    <div class="table-wrap"><table><thead><tr><th>Action</th><th>Linked incident</th><th>Owner</th><th>Due</th><th>Status</th></tr></thead><tbody>
+      <tr><td>Install temporary lane signage at Main Stage</td><td>INC-2207</td><td>Facilities</td><td>15:10</td><td>${statusBadge('Assigned')}</td></tr>
+      <tr><td>Restock water station B</td><td>INC-2206</td><td>Guest Services</td><td>15:00</td><td>${statusBadge('In progress')}</td></tr>
+      <tr><td>Review Gate C scanner calibration</td><td>OPS-1182</td><td>Gate Lead</td><td>16:00</td><td>${statusBadge('On track')}</td></tr>
+    </tbody></table></div>
+  </section>`;
+}
+function staffResourcesPage(){
+  return `${pageTitle('Field resources','Team availability, equipment, routes, and operational handover.',`<button class="btn btn-primary" onclick="toast('Resource update sent','Command received your resource status update.','success')">${I('send')} Send update</button>`)}
+  <div class="resource-grid">${state.resources.map(resourceCard).join('')}</div>
+  <section class="panel" style="margin-top:16px;">
+    <div class="panel-head"><div><div class="panel-title">Deployment board</div><div class="panel-sub">Current staff and response assignments</div></div></div>
+    <div class="row-list">${state.staff.map(staffRow).join('')}</div>
+  </section>`;
+}
+function submitStaffIncident(e){
+  e.preventDefault();
+  const id=`INC-${2210+state.incidents.length}`;
+  const type=document.getElementById('s-type').value;
+  const severity=document.getElementById('s-sev').value;
+  const zone=document.getElementById('s-zone').value;
+  const location=escapeHtml(document.getElementById('s-loc').value);
+  const description=escapeHtml(document.getElementById('s-desc').value);
+  const action=escapeHtml(document.getElementById('s-action').value||'Staff observation logged');
+  const owner=document.getElementById('s-owner').value;
+  state.incidents.unshift({id,type,severity,zone,location,reporter:`Staff: ${state.staffUser.name}`,status:'Assigned',owner,sla:severity==='critical'?'3 min':'12 min',created:currentTime(),description,affected:'Pending assessment',evidence:'Staff notes',actions:[action,'Command monitoring']});
+  state.audit.unshift({time:currentTime(),actor:state.staffUser.name,action:`Created staff incident ${id}`,type:'Incident'});
+  render();
+  toast('Incident logged',`${id} assigned to ${owner}.`,severity==='critical'?'danger':'success');
+}
+function focusStaffForm(){
+  setTimeout(()=>document.getElementById('s-type')?.focus(),0);
+}
+
+function adminPage(){
+  if(state.page==='incidents')return adminIncidentsPage();
+  if(state.page==='map')return adminMapPage();
+  if(state.page==='analytics')return adminAnalyticsPage();
+  if(state.page==='people')return adminPeoplePage();
+  if(state.page==='alerts')return adminAlertsPage();
+  if(state.page==='compliance')return adminCompliancePage();
+  if(state.page==='settings')return adminSettingsPage();
+  return adminCommandPage();
+}
+function adminCommandPage(){
+  return `${pageTitle('Command center','Executive view for venue safety, incidents, alerts, resources, and escalation decisions.',`<button class="btn btn-danger" onclick="triggerCriticalAlert()">${I('alert')} Trigger emergency alert</button><button class="btn btn-primary" onclick="setPage('alerts')">${I('send')} Compose alert</button>`)}
+  <div class="grid grid-4">
+    ${stat('Safety posture','Watch','One high-density zone','shield','trend-watch')}
+    ${stat('Open incidents',state.incidents.filter(i=>i.status!=='Closed').length,'Three require command visibility','alert','trend-risk')}
+    ${stat('Population inside','24,680','76 percent venue capacity','users','trend-good')}
+    ${stat('Alert acknowledgement','94%','Critical broadcast within SLA','bell','trend-good')}
+  </div>
+  <div class="grid grid-2" style="margin-top:16px;">
+    <section class="panel map-large">
+      <div class="panel-head"><div><div class="panel-title">Live operating map</div><div class="panel-sub">Density, incidents, gates, and response resources</div></div><button class="btn btn-ghost btn-sm" onclick="setPage('map')">${I('map')} Full map</button></div>
+      ${miniMap(true)}
+    </section>
+    <section class="panel">
+      <div class="panel-head"><div><div class="panel-title">Command decisions</div><div class="panel-sub">Actions commonly used during live venue operations</div></div></div>
+      <div class="row-list">
+        ${actionRow('Open East relief lane','Reduce Main Stage density through controlled redirection','route','success')}
+        ${actionRow('Dispatch medical team','Send nearest medical unit to Food Court case','activity','danger')}
+        ${actionRow('Escalate Gate C staffing','Move two stewards to queue management','users','warn')}
+        ${actionRow('Generate incident briefing','Create current command summary for leadership','file','info')}
+      </div>
+    </section>
+  </div>
+  <div class="grid grid-2" style="margin-top:16px;">
+    <section class="panel"><div class="panel-head"><div><div class="panel-title">Priority incident board</div><div class="panel-sub">Open cases by severity and response owner</div></div></div><div class="row-list">${state.incidents.slice(0,4).map(i=>incidentActionRow(i,'admin')).join('')}</div></section>
+    <section class="panel"><div class="panel-head"><div><div class="panel-title">Resource readiness</div><div class="panel-sub">Operational capacity for response assets</div></div></div><div class="resource-grid" style="padding:16px;">${state.resources.slice(0,4).map(resourceCard).join('')}</div></section>
+  </div>`;
+}
+function adminIncidentsPage(){
+  return `${pageTitle('Incident management','Full investigation queue with assignment, severity, corrective actions, and closure controls.',`<button class="btn btn-primary" onclick="exportBriefing()">${I('file')} Export briefing</button>`)}
+  <div class="grid grid-3">
+    ${stat('Critical and high',state.incidents.filter(i=>['critical','high'].includes(i.severity)).length,'Require command visibility','alert','trend-risk')}
+    ${stat('Within SLA','82%','Based on active response clocks','activity','trend-good')}
+    ${stat('Corrective actions','6','Four due before gates close','clipboard','trend-watch')}
+  </div>
+  <section class="panel" style="margin-top:16px;">
+    <div class="panel-head"><div><div class="panel-title">Investigation matrix</div><div class="panel-sub">Structured records suitable for post-event review</div></div></div>
+    <div class="table-wrap"><table><thead><tr><th>ID</th><th>Type</th><th>Severity</th><th>Zone</th><th>Status</th><th>Owner</th><th>SLA</th><th>Action</th></tr></thead><tbody>
+      ${state.incidents.map(i=>`<tr><td class="strong">${i.id}</td><td>${i.type}</td><td>${sevBadge(i.severity)}</td><td>${i.zone}</td><td>${statusBadge(i.status)}</td><td>${i.owner}</td><td>${i.sla}</td><td><button class="btn btn-ghost btn-sm" onclick="advanceIncident('${i.id}')">${I('check')} Advance</button></td></tr>`).join('')}
+    </tbody></table></div>
+  </section>
+  <section class="panel" style="margin-top:16px;">
+    <div class="panel-head"><div><div class="panel-title">Corrective action planning</div><div class="panel-sub">Prevent recurrence and link actions to accountable owners</div></div></div>
+    <div class="row-list">${state.incidents.slice(0,3).map(i=>`<div class="row"><div class="avatar">${I('clipboard')}</div><div class="row-main"><div class="row-title">${i.actions[0]}</div><div class="row-sub">${i.id} - ${i.zone} - Owner: ${i.owner}</div></div>${statusBadge(i.status)}</div>`).join('')}</div>
+  </section>`;
+}
+function adminMapPage(){
+  return `${pageTitle('Live map and zone intelligence','Density, incidents, exits, staff coverage, and resource overlays in one operating picture.',`<button class="btn btn-primary" onclick="toast('Map layer updated','Predictive risk overlay has been enabled for command review.','success')">${I('activity')} Risk overlay</button>`)}
+  <div class="grid grid-3">
+    ${state.zones.map(z=>`<div class="stat"><div class="stat-top"><div class="stat-icon">${I('map')}</div>${statusBadge(riskFromDensity(z.density))}</div><div class="stat-value mono">${z.density}%</div><div class="stat-label">${z.name} - ${z.staff} staff - response ${z.response}</div><div class="risk-meter" style="--pos:${z.density}%;margin-top:13px;"></div></div>`).join('')}
+  </div>
+  <section class="panel map-large" style="margin-top:16px;">
+    <div class="panel-head"><div><div class="panel-title">Full venue map</div><div class="panel-sub">Command overlays: high density, active cases, resource readiness, gate queues</div></div>${statusBadge('Live')}</div>
+    ${miniMap(true)}
+  </section>`;
+}
+function adminAnalyticsPage(){
+  return `${pageTitle('Analytics and predictive safety','Operational intelligence for leadership review, staffing decisions, and post-event improvement.',`<button class="btn btn-primary" onclick="exportBriefing()">${I('file')} Export analytics</button>`)}
+  <div class="grid grid-4">
+    ${stat('Peak entry rate','2,840/hr','Recorded at 13:50','chart','trend-good')}
+    ${stat('Avg response time','4.1 min','Improved by 18 percent','activity','trend-good')}
+    ${stat('Repeat risk zones','2','Main Stage and Food Court','map','trend-watch')}
+    ${stat('Reports per 1k guests','0.31','Within expected benchmark','file','trend-good')}
+  </div>
+  <div class="grid grid-2" style="margin-top:16px;">
+    <section class="panel"><div class="panel-head"><div><div class="panel-title">Entry flow trend</div><div class="panel-sub">Hourly scan volume</div></div></div><div class="chart" id="entryChart"></div><div class="bar-labels"><span>09</span><span>10</span><span>11</span><span>12</span><span>13</span><span>14</span><span>15</span><span>16</span></div></section>
+    <section class="panel"><div class="panel-head"><div><div class="panel-title">Incident mix</div><div class="panel-sub">Current event categories</div></div></div><div class="chart" id="incidentChart"></div><div class="bar-labels"><span>Medical</span><span>Crowd</span><span>Security</span><span>Infra</span><span>Lost</span><span>Access</span><span>Fire</span><span>Other</span></div></section>
+  </div>
+  <section class="panel" style="margin-top:16px;">
+    <div class="panel-head"><div><div class="panel-title">Leadership insights</div><div class="panel-sub">Automatically generated from live operational data</div></div></div>
+    <div class="row-list">
+      ${noteRow('Insight','Main Stage requires controlled egress before the next performance slot.')}
+      ${noteRow('Forecast','Food Court medical demand is likely to rise if water stock remains below 55 percent.')}
+      ${noteRow('Recommendation','Move two roaming stewards from North Concourse to Gate C for 30 minutes.')}
+    </div>
+  </section>`;
+}
+function adminPeoplePage(){
+  return `${pageTitle('People, access, and staffing','Attendee visibility, staff deployment, watch notes, and lost-property coordination.',`<button class="btn btn-primary" onclick="toast('Roster synced','Staff assignment and access records were refreshed.','success')">${I('users')} Sync roster</button>`)}
+  <div class="grid grid-2">
+    <section class="panel">
+      <div class="panel-head"><div><div class="panel-title">Attendee access records</div><div class="panel-sub">Presentation dataset with RFID, location, and safety status</div></div></div>
+      <div class="table-wrap"><table><thead><tr><th>RFID</th><th>Name</th><th>Zone</th><th>Status</th><th>Risk</th><th>Contact</th></tr></thead><tbody>${state.attendees.map(a=>`<tr><td class="strong">${a.rfid}</td><td>${a.name}</td><td>${a.zone}</td><td>${statusBadge(a.status)}</td><td>${statusBadge(a.risk)}</td><td>${a.contact}</td></tr>`).join('')}</tbody></table></div>
+    </section>
+    <section class="panel">
+      <div class="panel-head"><div><div class="panel-title">Staff deployment</div><div class="panel-sub">Availability and workload by zone</div></div></div>
+      <div class="row-list">${state.staff.map(staffRow).join('')}</div>
+    </section>
+  </div>`;
+}
+function adminAlertsPage(){
+  return `${pageTitle('Alert composer and acknowledgement','Targeted, multi-channel safety communication with acknowledgement tracking.',`<button class="btn btn-primary" onclick="sendAdminAlert()">${I('send')} Send alert</button>`)}
+  <div class="grid grid-2">
+    <section class="panel">
+      <div class="panel-head"><div><div class="panel-title">Compose alert</div><div class="panel-sub">Use short, specific instructions with audience and channel controls</div></div>${statusBadge('Approval required')}</div>
+      <div class="panel-pad form-grid">
+        <div><label for="ad-sev">Severity</label><select id="ad-sev"><option>low</option><option>medium</option><option selected>high</option><option>critical</option></select></div>
+        <div><label for="ad-audience">Audience</label><select id="ad-audience"><option>All users and staff</option><option>Main Stage only</option><option>Staff only</option><option>Gate C ticket holders</option><option>Medical and security leads</option></select></div>
+        <div><label for="ad-channel">Channels</label><select id="ad-channel"><option>App, SMS, PA</option><option>App only</option><option>App and SMS</option><option>Staff radio and app</option><option>Email summary</option></select></div>
+        <div><label for="ad-zone">Related zone</label><select id="ad-zone"><option>All zones</option>${state.zones.map(z=>`<option>${z.name}</option>`).join('')}</select></div>
+        <div class="field-full"><label for="ad-title">Title</label><input id="ad-title" value="Use East Concourse for Main Stage movement"/></div>
+        <div class="field-full"><label for="ad-msg">Instruction</label><textarea id="ad-msg">Main Stage is at high density. Use East Concourse and follow staff instructions until the next update.</textarea></div>
+        <div class="field-full toolbar"><button class="btn btn-primary" onclick="sendAdminAlert()">${I('send')} Send alert</button><button class="btn btn-outline" onclick="toast('Template loaded','Evacuation guidance template is ready.','success')">${I('file')} Load template</button></div>
+      </div>
+    </section>
+    <section class="panel">
+      <div class="panel-head"><div><div class="panel-title">Alert history</div><div class="panel-sub">Delivery, channels, and acknowledgement state</div></div></div>
+      <div class="row-list">${state.alerts.map(a=>alertSummary(a,false)).join('')}</div>
+    </section>
+  </div>`;
+}
+function adminCompliancePage(){
+  return `${pageTitle('Compliance and audit','Evidence trail for reports, broadcasts, assignments, inspections, and post-event review.',`<button class="btn btn-primary" onclick="exportBriefing()">${I('file')} Export audit pack</button>`)}
+  <div class="grid grid-3">
+    ${stat('Audit entries',state.audit.length,'Immutable event trail in production','file','trend-good')}
+    ${stat('Inspection completion','78%','Two checks due this hour','clipboard','trend-watch')}
+    ${stat('Policy exceptions','1','Medical privacy backup contact missing','lock','trend-watch')}
+  </div>
+  <section class="panel" style="margin-top:16px;">
+    <div class="panel-head"><div><div class="panel-title">Audit trail</div><div class="panel-sub">System, user, staff, and admin actions</div></div></div>
+    <div class="table-wrap"><table><thead><tr><th>Time</th><th>Actor</th><th>Type</th><th>Action</th></tr></thead><tbody>${state.audit.map(a=>`<tr><td>${a.time}</td><td>${a.actor}</td><td>${statusBadge(a.type)}</td><td>${a.action}</td></tr>`).join('')}</tbody></table></div>
+  </section>
+  <section class="panel" style="margin-top:16px;">
+    <div class="panel-head"><div><div class="panel-title">Inspection controls</div><div class="panel-sub">Readiness checks aligned to operational risk</div></div></div>
+    <div class="row-list">${state.checklists.map(c=>`<div class="row"><div class="avatar">${I('clipboard')}</div><div class="row-main"><div class="row-title">${c.name}</div><div class="row-sub">${c.owner} - Due ${c.due}</div><div class="progress" style="margin-top:8px;"><span style="width:${c.progress}%"></span></div></div>${statusBadge(c.status)}</div>`).join('')}</div>
+  </section>`;
+}
+function adminSettingsPage(){
+  return `${pageTitle('System settings','Operational thresholds, privacy policy, integrations, and role controls for the demo environment.',`<button class="btn btn-primary" onclick="toast('Settings saved','SafeFlow policy configuration was updated.','success')">${I('check')} Save settings</button>`)}
+  <div class="grid grid-2">
+    <section class="panel">
+      <div class="panel-head"><div><div class="panel-title">Risk thresholds</div><div class="panel-sub">Automated watches and escalation triggers</div></div></div>
+      <div class="panel-pad grid">
+        <div><div class="strong">Capacity alert threshold: <span id="capValue">${state.settings.capacityThreshold}%</span></div><input type="range" min="60" max="98" value="${state.settings.capacityThreshold}" oninput="state.settings.capacityThreshold=this.value;document.getElementById('capValue').textContent=this.value+'%';"/></div>
+        ${settingSwitch('autoEscalate','Auto escalation','Escalate critical incidents to command after SLA breach')}
+        ${settingSwitch('anonymous','Anonymous reporting','Allow users to report with identity hidden from field staff')}
+        ${settingSwitch('medicalPrivacy','Medical privacy guardrails','Restrict sensitive medical detail to authorized roles')}
+      </div>
+    </section>
+    <section class="panel">
+      <div class="panel-head"><div><div class="panel-title">Communication channels</div><div class="panel-sub">Used for alert delivery and acknowledgement</div></div></div>
+      <div class="panel-pad grid">
+        ${settingSwitch('sms','SMS delivery','Send urgent notices by SMS when available')}
+        ${settingSwitch('email','Email summaries','Send non-critical summaries by email')}
+        ${settingSwitch('pa','PA integration','Allow admin-approved PA announcement requests')}
+      </div>
+    </section>
+  </div>
+  <section class="panel" style="margin-top:16px;">
+    <div class="panel-head"><div><div class="panel-title">Role permissions</div><div class="panel-sub">Separation of duties for user, staff, and admin workflows</div></div></div>
+    <div class="table-wrap"><table><thead><tr><th>Permission</th><th>User</th><th>Staff</th><th>Admin</th></tr></thead><tbody>
+      <tr><td>Submit incident report</td><td>${statusBadge('Allowed')}</td><td>${statusBadge('Allowed')}</td><td>${statusBadge('Allowed')}</td></tr>
+      <tr><td>View targeted alerts</td><td>${statusBadge('Allowed')}</td><td>${statusBadge('Allowed')}</td><td>${statusBadge('Allowed')}</td></tr>
+      <tr><td>Assign incident owner</td><td>${statusBadge('Blocked')}</td><td>${statusBadge('Limited')}</td><td>${statusBadge('Allowed')}</td></tr>
+      <tr><td>Send mass broadcast</td><td>${statusBadge('Blocked')}</td><td>${statusBadge('Review')}</td><td>${statusBadge('Allowed')}</td></tr>
+      <tr><td>Export audit pack</td><td>${statusBadge('Blocked')}</td><td>${statusBadge('Blocked')}</td><td>${statusBadge('Allowed')}</td></tr>
+    </tbody></table></div>
+  </section>`;
+}
+
+function stat(label,value,sub,icon,trendClass){
+  return `<div class="stat"><div class="stat-top"><div class="stat-icon">${I(icon)}</div><span class="stat-trend ${trendClass||''}">${value}</span></div><div class="stat-value mono">${value}</div><div class="stat-label">${label}</div><div class="row-sub" style="margin-top:8px;">${sub}</div></div>`;
+}
+function alertSummary(a,compact){
+  const ack=`<div class="progress" style="margin-top:9px;"><span style="width:${a.ack}%"></span></div><div class="row-sub" style="margin-top:6px;">${a.ack}% acknowledged - ${a.channel}</div>`;
+  return `<div class="${compact?'incident-card':'row'}">
+    ${compact?`<div class="incident-top"><div><div class="incident-id">${a.id} - ${a.time}</div><div class="incident-title">${a.title}</div></div>${sevBadge(a.severity)}</div><div class="row-sub">${a.message}</div><div class="incident-meta">${statusBadge(a.zone)}${statusBadge(a.audience)}</div>${ack}<div class="toolbar"><button class="btn btn-primary btn-sm" onclick="ackAlert('${a.id}')">${I('check')} Acknowledge</button><button class="btn btn-outline btn-sm" onclick="toast('Guidance opened','Detailed safety guidance is available in the resources view.','success')">${I('file')} Details</button></div>`:
+    `<div class="avatar">${I('bell')}</div><div class="row-main"><div class="row-title">${a.title}</div><div class="row-sub">${a.id} - ${a.zone} - ${a.message}</div>${ack}</div><div class="toolbar">${sevBadge(a.severity)}<button class="btn btn-ghost btn-sm" onclick="ackAlert('${a.id}')">${I('check')} Ack</button></div>`}
+  </div>`;
+}
+function reportRow(r){
+  return `<div class="row"><div class="avatar">${I('file')}</div><div class="row-main"><div class="row-title">${r.id} - ${r.type}</div><div class="row-sub">${r.summary} - ${r.time}</div></div>${statusBadge(r.status)}</div>`;
+}
+function incidentRow(i){
+  return `<div class="row"><div class="avatar">${I('alert')}</div><div class="row-main"><div class="row-title">${i.id} - ${i.type}</div><div class="row-sub">${i.zone} - ${i.location} - Owner: ${i.owner}</div></div><div class="toolbar">${sevBadge(i.severity)}${statusBadge(i.status)}</div></div>`;
+}
+function incidentActionRow(i,role){
+  return `<div class="row"><div class="avatar">${I('alert')}</div><div class="row-main"><div class="row-title">${i.id} - ${i.type}</div><div class="row-sub">${i.description}</div><div class="incident-meta" style="margin-top:8px;">${sevBadge(i.severity)}${statusBadge(i.status)}${statusBadge(i.zone)}<span class="badge badge-muted">Owner: ${i.owner}</span></div></div><button class="btn btn-ghost btn-sm" onclick="advanceIncident('${i.id}')">${I('check')} ${role==='admin'?'Advance':'Update'}</button></div>`;
+}
+function zoneRow(z){
+  return `<div class="row"><div class="avatar">${I('map')}</div><div class="row-main"><div class="row-title">${z.name}</div><div class="row-sub">${z.density}% density - ${z.staff} staff - ${z.response} response</div><div class="progress" style="margin-top:8px;"><span style="width:${z.density}%"></span></div></div>${statusBadge(riskFromDensity(z.density))}</div>`;
+}
+function resourceMini(title,sub,status,icon){
+  return `<div class="resource-card"><div class="stat-icon">${I(icon)}</div><div><div class="row-title">${title}</div><div class="row-sub">${sub}</div></div>${statusBadge(status)}</div>`;
+}
+function resourceCard(r){
+  return `<div class="resource-card"><div class="incident-top"><div><div class="row-title">${r.name}</div><div class="row-sub">${r.type} - ${r.zone}</div></div>${statusBadge(r.status)}</div><div class="progress"><span style="width:${r.stock}%"></span></div><div class="row-sub">Readiness ${r.stock}% - ETA ${r.eta}</div></div>`;
+}
+function contactRow(name,num,sub){
+  return `<div class="row"><div class="avatar">${I('activity')}</div><div class="row-main"><div class="row-title">${name}</div><div class="row-sub">${sub}</div></div><a class="btn btn-ghost btn-sm" href="tel:${num}">${num}</a></div>`;
+}
+function noteRow(time,msg){
+  return `<div class="row"><div class="avatar">${String(time).slice(0,2).toUpperCase()}</div><div class="row-main"><div class="row-title">${time}</div><div class="row-sub">${msg}</div></div></div>`;
+}
+function staffRow(s){
+  return `<div class="row"><div class="avatar">${initials(s.name)}</div><div class="row-main"><div class="row-title">${s.name}</div><div class="row-sub">${s.role} - ${s.zone} - Last update ${s.last}</div></div><div class="toolbar">${statusBadge(s.status)}${statusBadge(s.load)}</div></div>`;
+}
+function actionRow(title,sub,icon,type){
+  const fn=type==='danger'?'triggerCriticalAlert()':`toast('${title}','Command action recorded and added to the audit log.','success')`;
+  return `<div class="row"><div class="avatar">${I(icon)}</div><div class="row-main"><div class="row-title">${title}</div><div class="row-sub">${sub}</div></div><button class="btn ${type==='danger'?'btn-danger':type==='warn'?'btn-warning':'btn-ghost'} btn-sm" onclick="${fn}">${I('check')} Execute</button></div>`;
+}
+function scanRow(time,rfid,name,result,risk){
+  return `<div class="row"><div class="avatar">${I('scan')}</div><div class="row-main"><div class="row-title">${rfid} - ${name}</div><div class="row-sub">${time} - ${result}</div></div>${statusBadge(risk)}</div>`;
+}
+function timelineItem(step,text){
+  return `<div class="timeline-item"><div class="timeline-dot"></div><div><div class="row-title">Step ${step}</div><div class="row-sub">${text}</div></div></div>`;
+}
+function settingSwitch(key,title,desc){
+  return `<div class="switch-line"><button class="switch ${state.settings[key]?'on':''}" onclick="state.settings.${key}=!state.settings.${key};render()" aria-label="Toggle ${title}"></button><div><div class="strong">${title}</div><div class="row-sub">${desc}</div></div></div>`;
+}
+function currentTime(){
+  return new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit',hour12:false});
+}
+function ackAlert(id){
+  const a=state.alerts.find(x=>x.id===id);
+  if(a){a.read=true;a.ack=Math.min(100,a.ack+8);toast('Alert acknowledged',`${a.id} acknowledgement recorded.`,'success');render();}
+}
+function ackAllAlerts(){
+  state.alerts.forEach(a=>{a.read=true;a.ack=Math.max(a.ack,96);});
+  toast('Alerts acknowledged','All current safety notices are marked acknowledged.','success');
+  render();
+}
+function advanceIncident(id){
+  const i=state.incidents.find(x=>x.id===id);
+  if(!i)return;
+  const flow=['Triage','Assigned','Responding','Monitoring','Closed'];
+  const next=flow[Math.min(flow.indexOf(i.status)+1,flow.length-1)]||'Assigned';
+  i.status=next;
+  if(next==='Closed')i.sla='Closed';
+  state.audit.unshift({time:currentTime(),actor:state.role==='admin'?'Admin':state.staffUser.name,action:`Advanced ${id} to ${next}`,type:'Incident'});
+  toast('Incident updated',`${id} moved to ${next}.`,'success');
+  render();
+}
+function sendAdminAlert(){
+  const title=escapeHtml(document.getElementById('ad-title')?.value||'Safety alert');
+  const message=escapeHtml(document.getElementById('ad-msg')?.value||'Follow staff instructions.');
+  const severity=document.getElementById('ad-sev')?.value||'medium';
+  const audience=document.getElementById('ad-audience')?.value||'All users and staff';
+  const channel=document.getElementById('ad-channel')?.value||'App';
+  const zone=document.getElementById('ad-zone')?.value||'All zones';
+  const id=`ALT-${1050+state.alerts.length}`;
+  state.alerts.unshift({id,severity,title,audience,zone,time:currentTime(),message,ack:0,read:false,channel});
+  state.audit.unshift({time:currentTime(),actor:'Admin',action:`Sent alert ${id} to ${audience}`,type:'Alert'});
+  toast('Alert sent',`${id} delivered through ${channel}.`,severity==='critical'?'danger':'success');
+  render();
+}
+function submitStaffBroadcast(){
+  const msg=escapeHtml(document.getElementById('ba-msg')?.value||'Broadcast request submitted.');
+  state.audit.unshift({time:currentTime(),actor:state.staffUser.name,action:`Requested broadcast: ${msg.slice(0,70)}`,type:'Alert'});
+  toast('Broadcast request submitted','Command can approve and send it from the admin alert center.','success');
+}
+function triggerCriticalAlert(){
+  const id=`ALT-${1050+state.alerts.length}`;
+  state.alerts.unshift({id,severity:'critical',title:'Emergency action required',audience:'All users and staff',zone:'All zones',time:currentTime(),message:'Follow staff instructions, move calmly to marked exits, and avoid high-density routes.',ack:0,read:false,channel:'App, SMS, PA'});
+  state.audit.unshift({time:currentTime(),actor:'Admin',action:`Triggered emergency alert ${id}`,type:'Alert'});
+  toast('Emergency alert triggered',`${id} was sent to all users and staff.`, 'danger');
+  render();
+}
+function exportBriefing(){
+  toast('Briefing generated','A professional summary is ready in the audit and analytics views.','success');
+}
+function completeNextChecklist(){
+  const c=state.checklists.find(x=>x.progress<100);
+  if(c){c.progress=Math.min(100,c.progress+14);c.status=c.progress>=100?'Completed':'In progress';toast('Checklist updated',`${c.id} is now ${c.progress}% complete.`,'success');render();}
+}
+function lookupScan(){
+  const q=document.getElementById('scanInput')?.value.toLowerCase()||'';
+  const a=state.attendees.find(x=>x.rfid.toLowerCase().includes(q)||x.name.toLowerCase().includes(q));
+  const out=document.getElementById('scanResult');
+  if(!out)return;
+  out.innerHTML=a?`<div class="incident-card"><div class="incident-top"><div><div class="incident-id">${a.rfid}</div><div class="incident-title">${a.name}</div></div>${statusBadge(a.risk)}</div><div class="row-sub">${a.zone} - ${a.status} - Contact ${a.contact}</div><div class="toolbar"><button class="btn btn-success btn-sm" onclick="toast('Access approved','${a.name} access event recorded.','success')">${I('check')} Approve</button><button class="btn btn-warning btn-sm" onclick="toast('Manual review','Command review requested for ${a.rfid}.','warn')">${I('alert')} Review</button></div></div>`:`<div class="incident-card"><div class="incident-title">No matching record</div><div class="row-sub">Manual identity check required before access is granted.</div></div>`;
+}
+function simulateScan(){
+  const a=state.attendees[Math.floor(Math.random()*state.attendees.length)];
+  const input=document.getElementById('scanInput');
+  if(input)input.value=a.rfid;
+  const feed=document.getElementById('scanFeed');
+  if(feed)feed.insertAdjacentHTML('afterbegin',scanRow(currentTime(),a.rfid,a.name,a.status==='Exited'?'Exit recorded':'Entry approved',a.risk));
+  lookupScan();
+  toast('Scan received',`${a.rfid} was processed at Gate B.`,'success');
+}
+function drawCharts(){
+  const entry=document.getElementById('entryChart');
+  const inc=document.getElementById('incidentChart');
+  if(entry)entry.innerHTML=[38,55,61,74,96,82,69,46].map(v=>`<div class="bar" style="height:${v}%"><span>${v}</span></div>`).join('');
+  if(inc)inc.innerHTML=[42,70,26,35,31,18,9,14].map(v=>`<div class="bar" style="height:${v}%"><span>${v}</span></div>`).join('');
+}
+
+render();
+</script>
+</body>
+</html>
